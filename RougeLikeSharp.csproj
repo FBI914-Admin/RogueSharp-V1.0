@@ -58,6 +58,7 @@
     <Compile Include="Systems\SchedulingSystem.cs" />
     <Compile Include="Interfaces\IBehavior.cs" />
     <Compile Include="Behaviors\StandardMoveAndAttack.cs" />
+    <Compile Include="Core\Stairs.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />

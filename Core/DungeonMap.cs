@@ -14,8 +14,13 @@ namespace RogueSharpV3Tutorial.Core
 
         public List<Rectangle> Rooms;
 
+        public Stairs StairsUp { get; set; }
+        public Stairs StairsDown { get; set; }
+
         public DungeonMap()
         {
+            Game.SchedulingSystem.Clear();
+
             // Initialize all the lists when we create a new DungeonMap
             _monsters = new List<Monster>();
             Rooms = new List<Rectangle>();
@@ -90,6 +95,12 @@ namespace RogueSharpV3Tutorial.Core
             return _monsters.FirstOrDefault(m => m.X == x && m.Y == y);
         }
 
+        public bool CanMoveDownToNextLevel()
+        {
+            Player player = Game.Player;
+            return StairsDown.X == player.X && StairsDown.Y == player.Y;
+        }
+
         // A helper method for setting the IsWalkable property on a Cell
         public void SetIsWalkable(int x, int y, bool isWalkable)
         {
@@ -142,6 +153,10 @@ namespace RogueSharpV3Tutorial.Core
                 SetConsoleSymbolForCell(mapConsole, cell);
             }
 
+            StairsUp.Draw(mapConsole, this);
+            StairsDown.Draw(mapConsole, this);
+
+
             // Keep an index so we know which position to draw monster stats at
             int i = 0;
             // Iterate through each monster on the map and draw it after drawing the Cells
@@ -157,6 +172,8 @@ namespace RogueSharpV3Tutorial.Core
                 }
             }
         }
+
+        
 
         private void SetConsoleSymbolForCell(RLConsole console, Cell cell)
         {
